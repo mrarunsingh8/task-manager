@@ -58,4 +58,60 @@ It will start a server for production use.
 | `id`      | `string` | **Required**. Id of Task to fetch |
 
 
+#### Create a new task
+
+```http
+  POST /api/tasks/
+```
+
+| Body | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `id`      | `string` | **Required**. Id of Task |
+| `assign_to`      | `string` | **Required**. assign_to of Task |
+| `assigned_by`      | `string` | **Required**. assigned_by of Task |
+| `title`      | `string` | **Required**. title of Task |
+| `description`      | `string` | **Required**. description of Task |
+| `due_date`      | `string` | **Required**. due_date of Task |
+| `status`      | `string` | **Required**. status of Task |
+
+
+#### Update a task
+
+```http
+  PUT /api/tasks/
+```
+
+| Body | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `id`      | `string` | **Required**. Id of Task |
+| `assign_to`      | `string` | **Required**. assign_to of Task |
+| `assigned_by`      | `string` | **Required**. assigned_by of Task |
+| `title`      | `string` | **Required**. title of Task |
+| `description`      | `string` | **Required**. description of Task |
+| `due_date`      | `string` | **Required**. due_date of Task |
+| `status`      | `string` | **Required**. status of Task |
+
+
+#### Partial update a task
+
+```http
+  PATCH /api/tasks/
+```
+
+| Body | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `id`      | `string` | **Required**. Id of Task |
+| `status`      | `string` | **Required**. status of Task |
+
+
+
+#### Delete a task by id
+
+```http
+  DELETE /api/tasks/${id}
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `id`      | `string` | **Required**. Id of Task to delete |
 
