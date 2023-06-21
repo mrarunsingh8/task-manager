@@ -155,7 +155,54 @@ tasksRouter.patch("/", (req, res)=>{
         fs.writeFileSync(filePath, JSON.stringify(taskDb), {encoding: "utf8", flag: "w"});
         res.status(200).json({
             statusCode: 200,
-            message: `The task has been modified for the taskId: ${taskId}`
+            message: `The status has been modified for the taskId: ${taskId}`
+        });
+    }else{
+        res.status(400).json({
+            statusCode: 400,
+            error: `No result found with the provided taskId: ${taskId}`
+        });
+    }
+
+});
+
+
+tasksRouter.patch("/priority", (req, res)=>{
+    let postData = {
+        id: req.body.id,
+        priority: req.body.priority
+    };
+    const schema = Joi.object({
+        id: Joi.number().required(),
+        priority: Joi.string().valid('Low', 'Medium', 'High').required().label("Priority")
+    }).options({ abortEarly: false });
+    const { error } = schema.validate(postData);
+    if (error) {
+        res.status(400).json({
+            statusCode: 400,
+            dateTime: new Date(),
+            description: "Error updating task: Invalid request body",
+            errors: error.details,
+        });
+        return false;
+    }
+    const taskId = postData.id;
+    let chk = taskDb.tasks.filter((item)=>{
+        return item.id == taskId;
+    });
+    if(chk.length > 0){
+        let taskArr = taskDb.tasks.map((item)=>{
+            if(item.id == taskId){
+                return { ...item, priority: postData.priority};
+            }
+            return item;
+        });
+        taskDb.tasks = taskArr;
+        let filePath = path.join(__dirname, "../", "db.json");
+        fs.writeFileSync(filePath, JSON.stringify(taskDb), {encoding: "utf8", flag: "w"});
+        res.status(200).json({
+            statusCode: 200,
+            message: `The priority has been modified for the taskId: ${taskId}`
         });
     }else{
         res.status(400).json({

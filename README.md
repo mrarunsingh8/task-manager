@@ -94,7 +94,9 @@ It will start a server for production use.
 | `priority`      | `enum('Low', 'Medium', 'High')` | **Required**. priority of Task |
 
 
-#### Partial update a task
+#### Partial Update a Task
+
+##### Update the `status` for a task
 
 ```http
   PATCH /api/tasks/
@@ -104,6 +106,19 @@ It will start a server for production use.
 | :-------- | :------- | :-------------------------------- |
 | `id`      | `string` | **Required**. Id of Task |
 | `status`      | `string` | **Required**. status of Task |
+
+
+
+##### Update the `priority` for a task
+
+```http
+  PATCH /api/tasks/priority/
+```
+
+| Body | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `id`      | `string` | **Required**. Id of Task |
+| `priority`      | `enum('Low', 'Medium', 'High')`  | **Required**. status of Task |
 
 
 
