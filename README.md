@@ -67,12 +67,13 @@ It will start a server for production use.
 | Body | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
 | `id`      | `string` | **Required**. Id of Task |
-| `assign_to`      | `string` | **Required**. assign_to of Task |
-| `assigned_by`      | `string` | **Required**. assigned_by of Task |
+| `assign_to`      | `string` | **Optional**. assign_to of Task |
+| `assigned_by`      | `string` | **Optional**. assigned_by of Task |
 | `title`      | `string` | **Required**. title of Task |
 | `description`      | `string` | **Required**. description of Task |
-| `due_date`      | `string` | **Required**. due_date of Task |
-| `status`      | `string` | **Required**. status of Task |
+| `due_date`      | `date('dd-mm-yyyy')` | **Required**. due_date of Task |
+| `status`      | `boolean` | **Required**. status of Task |
+| `priority`      | `enum('Low', 'Medium', 'High')` | **Required**. priority of Task |
 
 
 #### Update a task
@@ -84,12 +85,13 @@ It will start a server for production use.
 | Body | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
 | `id`      | `string` | **Required**. Id of Task |
-| `assign_to`      | `string` | **Required**. assign_to of Task |
-| `assigned_by`      | `string` | **Required**. assigned_by of Task |
+| `assign_to`      | `string` | **Optional**. assign_to of Task |
+| `assigned_by`      | `string` | **Optional**. assigned_by of Task |
 | `title`      | `string` | **Required**. title of Task |
 | `description`      | `string` | **Required**. description of Task |
-| `due_date`      | `string` | **Required**. due_date of Task |
-| `status`      | `string` | **Required**. status of Task |
+| `due_date`      | `date('dd-mm-yyyy')` | **Required**. due_date of Task |
+| `status`      | `boolean` | **Required**. status of Task |
+| `priority`      | `enum('Low', 'Medium', 'High')` | **Required**. priority of Task |
 
 
 #### Partial update a task

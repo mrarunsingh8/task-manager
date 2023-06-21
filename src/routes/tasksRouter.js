@@ -2,6 +2,8 @@ const tasksRouter = require("express").Router();
 const path = require("path");
 const taskDb = require("../db.json");
 const fs = require("fs");
+const taskValidator = require("../validators/taskValidator");
+const Joi = require("joi");
 
 tasksRouter.get("/", (req, res)=>{
     res.status(200).json({
@@ -29,12 +31,32 @@ tasksRouter.get("/:id", (req, res)=>{
 });
 
 tasksRouter.post("/", (req, res)=>{
-    const taskId = req.body.id;
+    let postData = {
+        id: req.body.id,
+        assign_to: req.body.assign_to,
+        assigned_by: req.body.assigned_by,
+        title: req.body.title,
+        description: req.body.description,
+        due_date: req.body.due_date,
+        status: req.body.status,
+        priority: req.body.priority
+    };
+    const { error } = taskValidator.validate(postData);
+    if (error) {
+        res.status(400).json({
+            statusCode: 400,
+            dateTime: new Date(),
+            description: "Error creating task: Invalid request body",
+            errors: error.details,
+        });
+        return false;
+    }
+    const taskId = postData.id;
     let chk = taskDb.tasks.filter((item)=>{
         return item.id == taskId;
     });
     if(chk.length < 1){
-        taskDb.tasks.push(req.body);
+        taskDb.tasks.push(postData);
         let filePath = path.join(__dirname, "../", "db.json");
         fs.writeFileSync(filePath, JSON.stringify(taskDb), {encoding: "utf8", flag: "w"});
         res.status(200).json({
@@ -51,22 +73,34 @@ tasksRouter.post("/", (req, res)=>{
 
 
 tasksRouter.put("/", (req, res)=>{
-    const taskId = req.body.id;
+    let postData = {
+        id: req.body.id,
+        assign_to: req.body.assign_to,
+        assigned_by: req.body.assigned_by,
+        title: req.body.title,
+        description: req.body.description,
+        due_date: req.body.due_date,
+        status: req.body.status,
+        priority: req.body.priority
+    };
+    const { error } = taskValidator.validate(postData);
+    if (error) {
+        res.status(400).json({
+            statusCode: 400,
+            dateTime: new Date(),
+            description: "Error updating task: Invalid request body",
+            errors: error.details,
+        });
+        return false;
+    }
+    const taskId = postData.id;
     let chk = taskDb.tasks.filter((item)=>{
         return item.id == taskId;
     });
     if(chk.length > 0){
         let taskArr = taskDb.tasks.map((item)=>{
             if(item.id == taskId){
-                return {
-                    id: req.body.id,
-                    assign_to: req.body.assign_to,
-                    assigned_by: req.body.assigned_by,
-                    title: req.body.title,
-                    description: req.body.description,
-                    due_date: req.body.due_date,
-                    status: req.body.status,
-                };
+                return postData;
             }
             return item;
         });
@@ -87,15 +121,32 @@ tasksRouter.put("/", (req, res)=>{
 
 
 tasksRouter.patch("/", (req, res)=>{
-    const taskId = req.body.id;
+    let postData = {
+        id: req.body.id,
+        status: req.body.status
+    };
+    const schema = Joi.object({
+        id: Joi.number().required(),
+        status: Joi.boolean().required(),
+    }).options({ abortEarly: false });
+    const { error } = schema.validate(postData);
+    if (error) {
+        res.status(400).json({
+            statusCode: 400,
+            dateTime: new Date(),
+            description: "Error updating task: Invalid request body",
+            errors: error.details,
+        });
+        return false;
+    }
+    const taskId = postData.id;
     let chk = taskDb.tasks.filter((item)=>{
         return item.id == taskId;
     });
     if(chk.length > 0){
         let taskArr = taskDb.tasks.map((item)=>{
             if(item.id == taskId){
-
-                return { ...item, status: req.body.status};
+                return { ...item, status: postData.status};
             }
             return item;
         });
