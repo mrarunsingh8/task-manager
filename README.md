@@ -41,13 +41,15 @@ It will start a server for production use.
 
 ## API Reference
 
-#### Get all tasks
+#### Get `tasks`
+
+##### Get all tasks
 
 ```http
   GET /api/tasks
 ```
 
-#### Get a perticular task by id
+##### Get a perticular `task` by id
 
 ```http
   GET /api/tasks/${id}
@@ -57,6 +59,17 @@ It will start a server for production use.
 | :-------- | :------- | :-------------------------------- |
 | `id`      | `string` | **Required**. Id of Task to fetch |
 
+
+
+##### Get a task by priority level
+
+```http
+  GET /api/tasks/priority/${level}
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `level`      | `enum('Low', 'Medium', 'High')` | **Required**. Choose a priority level of Task to fetch |
 
 #### Create a new task
 

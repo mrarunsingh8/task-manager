@@ -30,6 +30,33 @@ tasksRouter.get("/:id", (req, res)=>{
     }
 });
 
+
+tasksRouter.get("/priority/:level", (req, res)=>{
+    let params = {
+        priority: req.params.level
+    }
+    const schema = Joi.object({
+        priority: Joi.string().valid('Low', 'Medium', 'High').required().label("Level")
+    }).options({ abortEarly: false });
+    const { error } = schema.validate(params);
+    if (error) {
+        res.status(400).json({
+            statusCode: 400,
+            dateTime: new Date(),
+            description: "Error task: Invalid request params",
+            errors: error.details,
+        });
+        return false;
+    }
+    let task = taskDb.tasks.filter((item)=>{
+        return item.priority == params.priority;
+    });
+    res.status(200).json({
+        statusCode: 200,
+        task: task[0]
+    });
+});
+
 tasksRouter.post("/", (req, res)=>{
     let postData = {
         id: req.body.id,
