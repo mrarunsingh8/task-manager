@@ -8,7 +8,7 @@ const taskValidator = Joi.object({
     description: Joi.string().required(),
     due_date: Joi.string().pattern(/^\d{2}-\d{2}-\d{4}$/).required(),
     status: Joi.boolean().required(),
-    priority: Joi.string().valid('Low', 'Medium', 'High').required().label("Priority")
+    priority: Joi.string().valid('Low', 'Medium', 'High').optional().label("Priority")
 }).options({ abortEarly: false });
 
 module.exports = taskValidator;

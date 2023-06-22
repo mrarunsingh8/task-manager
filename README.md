@@ -86,7 +86,7 @@ It will start a server for production use.
 | `description`      | `string` | **Required**. description of Task |
 | `due_date`      | `date('dd-mm-yyyy')` | **Required**. due_date of Task |
 | `status`      | `boolean` | **Required**. status of Task |
-| `priority`      | `enum('Low', 'Medium', 'High')` | **Required**. priority of Task |
+| `priority`      | `enum('Low', 'Medium', 'High')` | **Optional**. priority of Task |
 
 
 #### Update a task
@@ -104,7 +104,7 @@ It will start a server for production use.
 | `description`      | `string` | **Required**. description of Task |
 | `due_date`      | `date('dd-mm-yyyy')` | **Required**. due_date of Task |
 | `status`      | `boolean` | **Required**. status of Task |
-| `priority`      | `enum('Low', 'Medium', 'High')` | **Required**. priority of Task |
+| `priority`      | `enum('Low', 'Medium', 'High')` | **Optional**. priority of Task |
 
 
 #### Partial Update a Task
